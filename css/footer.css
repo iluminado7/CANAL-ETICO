@@ -1,0 +1,99 @@
+@import url(style.css);
+/* ================= FOOTER ================= */
+
+.footer{
+
+background:#cdcdcd;
+color:rgb(0, 0, 0);
+margin-top:80px;
+width: 100%;
+font-family:  'Roboto', sans-serif;
+}
+
+.footer-container{
+
+max-width:1200px;
+margin:auto;
+display:flex;
+justify-content:space-between;
+padding:40px 20px;
+gap:40px;
+
+}
+
+.footer-column{
+
+flex:1;
+
+}
+
+.footer-column h3{
+
+color:#060606;
+margin-bottom:15px;
+
+}
+
+.footer-column ul{
+
+list-style:none;
+padding:0;
+
+}
+
+.footer-column ul li{
+
+margin-bottom:10px;
+
+}
+
+.footer-column ul a{
+
+text-decoration:none;
+color:rgb(0, 0, 0);
+
+}
+
+.footer-column ul a:hover{
+
+color:#8b6b5c;
+
+}
+
+.btn-footer{
+
+display:inline-block;
+margin-top:10px;
+background:#d4af37;
+color:black;
+padding:10px 18px;
+border-radius:5px;
+font-weight:bold;
+text-decoration:none;
+transition: 3.s;
+
+}
+
+.btn-footer:hover{
+    background: #8b6b5c;
+}
+
+.footer-bottom{
+
+text-align:center;
+padding:20px;
+border-top:1px solid #222;
+font-size:14px;
+
+}
+
+@media(max-width:900px){
+
+.footer-container{
+
+flex-direction:column;
+
+}
+}
+
+
