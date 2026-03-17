@@ -368,6 +368,7 @@ o haga click en Reporte libre y luego en CONTINUAR
 <input 
 type="date"
 name="fecha_hecho"
+id="fecha_hecho"
 required
 >
 
@@ -390,12 +391,41 @@ required
 <input type="file" name="archivo">
 
 <div class="aviso-latter">
-    <h1>Anonimato</h1> <p>En caso de que haya elegido ser anonimo, asegúrese de no incluir en los archivos datos que lo identifiquen.</p>
-    <h1>Responsabilidad</h1> <p>Usted se hace responsable por el contenido de los archivos adjuntos.</p>
-    <h1>Soporte</h1> <p>Si tiene problemas para adjuntar, contacte a  info@canaldedenuncias.com.</p>
 
+    <div class="aviso-item">
+        <span class="icon">🔒</span>
+        <div>
+            <h1>Anonimato</h1>
+            <p>En caso de que haya elegido ser anónimo, asegúrese de no incluir datos que lo identifiquen.</p>
+        </div>
+    </div>
+
+    <div class="aviso-item">
+        <span class="icon">⚠️</span>
+        <div>
+            <h1>Responsabilidad</h1>
+            <p>Usted se hace responsable por el contenido de los archivos adjuntos.</p>
+        </div>
+    </div>
+
+    <div class="aviso-item">
+        <span class="icon">📩</span>
+        <div>
+            <h1>Soporte</h1>
+            <p>Si tiene problemas para adjuntar, contacte a info@canaldedenuncias.com.</p>
+        </div>
+    </div>
 
 </div>
+
+</div>
+
+<div class="step" id="resumen-step">
+
+<h3>Resumen de la denuncia</h3>
+<p>Revise la información antes de enviar. Si necesita corregir algo, puede volver atrás.</p>
+
+<div id="resumen-contenido"></div>
 
 </div>
 
@@ -404,6 +434,7 @@ required
 <button type="button" id="prev">Anterior</button>
 <button type="button" id="next">Siguiente</button>
 
+<button type="submit" id="submit" style="display: none;">Enviar denuncia</button>
 
 </div>
 
