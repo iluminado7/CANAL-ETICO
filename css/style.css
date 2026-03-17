@@ -386,17 +386,41 @@ resize:vertical;
 }
 
 
-
 .aviso-latter{
-   background-color: #e4eb78;
-   color: #0f0f0f;
+    background: rgba(212, 175, 55, 0.08); /* dorado suave */
+    border-left: 4px solid #d4af37; /* detalle elegante */
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
 }
+
+/* Cada bloque interno */
 .aviso-latter h1{
-   font-size: 18px;
-   color: #0f0f0f;
+    font-size: 16px;
+    color: #d4af37;
+    margin-bottom: 5px;
+    margin-top: 15px;
+    font-weight: 600;
 }
+
+/* Primer título sin margen arriba */
+.aviso-latter h1:first-child{
+    margin-top: 0;
+}
+
 .aviso-latter p{
-   font-size: 16px;
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.aviso-item{
+   margin-top: 10px;
+}
+
+.aviso-item:last-child{
+   margin-top: 0;
 }
 
 .whatsapp-btn{
@@ -408,6 +432,43 @@ resize:vertical;
 
 .whatsapp-btn img{
     width:50px;
+}
+
+
+
+
+#resumen-contenido{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ITEM */
+.resumen-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 15px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    border: 1px solid #eee;
+}
+
+/* LABEL */
+.resumen-label{
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+}
+
+/* VALOR */
+.resumen-valor{
+    color: #111;
+    font-size: 14px;
+    text-align: right;
+    max-width: 60%;
+    word-break: break-word;
 }
 
 /* RESPONSIVE */
