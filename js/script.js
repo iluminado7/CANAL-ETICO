@@ -292,10 +292,6 @@ reporte_libre: {
 }
 
 
-
-
-
-
 function cargarCuestionario(){
 
 const seleccionado = document.querySelector("input[name='tipo_irregularidad']:checked")
@@ -375,20 +371,20 @@ const empresasSucursales = {
 ]
 
 }
-
 /* ================================
-   SOLO LETRAS (NOMBRE / APELLIDO / EMPRESA)
+   SOLO LETRAS
 ================================ */
 
 function soloLetras(input){
 
-if(!input) return
+    if(!input){
+        console.warn("Input no encontrado");
+        return;
+    }
 
-input.addEventListener("input",()=>{
-
-input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g,'')
-
-})
+    input.addEventListener("input",()=>{
+        input.value = input.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g,'')
+    })
 
 }
 
@@ -397,8 +393,6 @@ soloLetras(apellidoInput)
 soloLetras(empresaInput)
 soloLetras(nombreDenunciadoInput)
 soloLetras(apellidoDenunciadoInput)
-soloLetras(sectorDenunciadoInput)
-soloLetras(cargoDenunciadoInput)
 
 /* ================================
    NAVEGACION DE PASOS
@@ -406,135 +400,156 @@ soloLetras(cargoDenunciadoInput)
 
 function showStep(){
 
-steps.forEach((step,index)=>{
+    steps.forEach((step,index)=>{
 
-step.classList.remove("active")
+        step.classList.remove("active")
 
-if(index === currentStep){
-step.classList.add("active")
-}
+        if(index === currentStep){
+            step.classList.add("active")
+        }
 
-})
+    })
 
-prevBtn.style.display = currentStep === 0 ? "none" : "inline-block"
-nextBtn.style.display = currentStep === steps.length-1 ? "none" : "inline-block"
-submitBtn.style.display = currentStep === steps.length-1 ? "inline-block" : "none"
+    updateProgress()
 
-updateProgress()
-
-}
-
-function updateProgress(){
-
-let percent = ((currentStep+1)/steps.length)*100
-progress.style.width = percent + "%"
+    // CAMBIO DE TEXTO DEL BOTON
+    if(currentStep === steps.length - 1){
+        nextBtn.textContent = "Enviar denuncia"
+    }else{
+        nextBtn.textContent = "Siguiente"
+    }
 
 }
 
 /* ================================
    BOTON SIGUIENTE
 ================================ */
-
+   
 nextBtn.addEventListener("click",()=>{
 
-/* VALIDAR PASO ANONIMATO */
+    /* ================= VALIDAR ANONIMATO ================= */
+    if(currentStep === 0){
 
-if(currentStep === 0){
+        const selected = document.querySelector("input[name='anonimo']:checked")
 
-const selected = document.querySelector("input[name='anonimo']:checked")
+        if(!selected){
 
-if(!selected){
+            const radioGroup = document.querySelector(".radio-group")
 
-const radioGroup = document.querySelector(".radio-group")
+            if(!radioGroup.querySelector(".error-message")){
 
-if(!radioGroup.querySelector(".error-message")){
+                const error = document.createElement("span")
+                error.className = "error-message"
+                error.innerText = "Debe seleccionar una opción"
 
-const error = document.createElement("span")
+                radioGroup.appendChild(error)
+            }
 
-error.className = "error-message"
-error.innerText = "Debe seleccionar una opción"
+            return
+        }
+    }
 
-radioGroup.appendChild(error)
+    /* ================= VALIDAR EMPRESA ================= */
+    if(currentStep === 1){
+        if(!validarEmpresa()) return
+    }
 
-}
+    /* ================= VALIDAR SUCURSAL ================= */
+    if(currentStep === 2){
+        if(!validarSucursal()) return
+    }
 
-return
-}
+    /* ================= VALIDACION GENERAL ================= */
+    if(!validateStep()) return
 
-}
+    /* ================= AVANZAR ================= */
+    if(currentStep < steps.length - 1){
 
+        currentStep++
 
+        const stepActual = steps[currentStep]
 
+        /* ✅ CARGAR CUESTIONARIO EN EL MOMENTO CORRECTO */
+        if(stepActual.id === "cuestionario"){
+            cargarCuestionario()
+        }
 
-/* ================================
-   NO CONOCE DATOS DEL DENUNCIADO
-================================ */
+        /* ✅ GENERAR RESUMEN EN EL ULTIMO PASO */
+        if(stepActual.id === "resumen-step"){
+            generarResumen()
+            nextBtn === "Enviar denuncia"
+        }
 
-if(noDatosDenunciado){
-
-noDatosDenunciado.addEventListener("change",()=>{
-
-if(noDatosDenunciado.checked){
-
-camposDenunciado.forEach(campo => {
-
-campo.removeAttribute("required")
-campo.value = ""
-removeError(campo)
-
-})
-
-}else{
-
-camposDenunciado.forEach(campo => {
-
-campo.setAttribute("required","required")
-
-})
-
-}
-
-})
-
-}
-
-
-
-
-
-
-/* VALIDAR EMPRESA */
-
-if(currentStep === 1){
-
-if(!validarEmpresa()) return
-
-}
-
-/* VALIDAR SUCURSAL */
-
-if(currentStep === 2){
-
-if(!validarSucursal()) return
-
-}
-
-/* VALIDACION GENERAL */
-
-if(!validateStep()) return
-
-if(currentStep < steps.length-1){
-
-currentStep++
-showStep()
-
-}
-
-if(currentStep === 5){
-cargarCuestionario()
-}
+        showStep()
+    }
 
 })
+
+
+
+function generarResumen(){
+
+    const form = document.getElementById("formDenuncia")
+    const resumen = document.getElementById("resumen-contenido")
+
+    const data = new FormData(form)
+
+    let html = ""
+
+    // 👇 detectar anonimato
+    const anonimo = form.querySelector("input[name='anonimo']:checked")?.value
+
+    data.forEach((valor, clave)=>{
+
+        let mostrarValor = valor
+
+        // 🚫 OCULTAR DATOS PERSONALES SI ES ANONIMO
+        if(anonimo === "si"){
+            const camposPersonales = [
+                "nombre",
+                "apellido",
+                "email",
+                "telefono",
+                "dni",
+                "genero"
+            ]
+
+            if(camposPersonales.includes(clave)){
+                return
+            }
+        }
+
+        // 📎 ARCHIVOS
+        if(valor instanceof File){
+
+            if(valor.name === ""){
+                mostrarValor = "🚫 No se adjuntó ningún archivo"
+            }else{
+                mostrarValor = "📎 " + valor.name
+            }
+
+        }
+
+        // 🚫 IGNORAR VACÍOS
+        if(mostrarValor === "" || mostrarValor === null || mostrarValor === undefined){
+            return
+        }
+
+        let label = clave
+            .replaceAll("_"," ")
+            .replace(/\b\w/g, l => l.toUpperCase())
+
+        html += `
+            <div class="resumen-item">
+                <span class="resumen-label">${label}</span>
+                <span class="resumen-valor">${mostrarValor}</span>
+            </div>
+        `
+
+    })
+
+    resumen.innerHTML = html
+}
 
 /* ================================
    BOTON ANTERIOR
@@ -542,230 +557,206 @@ cargarCuestionario()
 
 prevBtn.addEventListener("click",()=>{
 
-if(currentStep > 0){
-
-currentStep--
-showStep()
-
-}
+    if(currentStep > 0){
+        currentStep--
+        showStep()
+    }
 
 })
+
+/* ================================
+   NO CONOCE DATOS
+================================ */
+
+if(noDatosDenunciado){
+
+    noDatosDenunciado.addEventListener("change",()=>{
+
+        if(noDatosDenunciado.checked){
+
+            camposDenunciado.forEach(campo=>{
+                campo.removeAttribute("required")
+                campo.value = ""
+                removeError(campo)
+            })
+
+        }else{
+
+            camposDenunciado.forEach(campo=>{
+                campo.setAttribute("required","required")
+            })
+
+        }
+
+    })
+
+}
 
 /* ================================
    ANONIMATO
 ================================ */
 
-radiosAnonimo.forEach(radio => {
+radiosAnonimo.forEach(radio=>{
 
-radio.addEventListener("change",()=>{
+    radio.addEventListener("change",()=>{
 
-const selected = document.querySelector("input[name='anonimo']:checked")
+        const selected = document.querySelector("input[name='anonimo']:checked")
 
-if(!datos || !selected) return
+        if(!datos || !selected) return
 
-if(selected.value === "si"){
+        if(selected.value === "si"){
 
-datos.style.display="none"
+            datos.style.display = "none"
 
-datos.querySelectorAll("input").forEach(input=>{
-input.removeAttribute("required")
-})
+            datos.querySelectorAll("input").forEach(input=>{
+                input.removeAttribute("required")
+            })
 
-}else{
+        }else{
 
-datos.style.display="block"
+            datos.style.display = "block"
 
-datos.querySelectorAll("input").forEach(input=>{
-input.setAttribute("required","required")
-})
+            datos.querySelectorAll("input").forEach(input=>{
+                input.setAttribute("required","required")
+            })
 
-}
+        }
 
-})
+    })
 
 })
 
 /* ================================
-   VALIDACION GENERAL CAMPOS
+   VALIDACION GENERAL
 ================================ */
+
 function validateStep(){
 
-let valid = true
+    let valid = true
 
-const currentFields = steps[currentStep].querySelectorAll("input, textarea, select")
+    const currentFields = steps[currentStep].querySelectorAll("input, textarea, select")
 
-currentFields.forEach(field => {
+    currentFields.forEach(field=>{
 
-removeError(field)
+        removeError(field)
 
-if(field.offsetParent === null) return
+        if(field.offsetParent === null) return
 
-if(field.hasAttribute("required") && field.value.trim() === ""){
+        if(field.hasAttribute("required") && field.value.trim() === ""){
+            showError(field,"Campo obligatorio")
+            valid = false
+        }
 
-showError(field,"Campo obligatorio")
+    })
 
-valid = false
-
+    return valid
 }
-
-})
-
-return valid
-
-}
-
-
 
 /* ================================
-   ERRORES
+   ERRORES (UNIFICADO)
 ================================ */
 
 function showError(field,message){
 
-field.classList.add("input-error")
+    field.classList.add("input-error")
 
-const error = document.createElement("span")
+    let error = field.parentNode.querySelector(".error-message")
 
-error.className = "error-message"
-error.innerText = message
+    if(!error){
+        error = document.createElement("span")
+        error.className = "error-message"
+        field.parentNode.appendChild(error)
+    }
 
-field.parentNode.appendChild(error)
-
+    error.innerText = message
 }
 
 function removeError(field){
 
-field.classList.remove("input-error")
+    field.classList.remove("input-error")
 
-const error = field.parentNode.querySelector(".error-message")
+    const error = field.parentNode.querySelector(".error-message")
 
-if(error){
-error.remove()
+    if(error){
+        error.remove()
+    }
 }
 
-}
+/* LIMPIAR ERROR */
 
-/* LIMPIAR ERROR AL ESCRIBIR */
+document.querySelectorAll("input, textarea, select").forEach(field=>{
 
-document.querySelectorAll("input, textarea, select").forEach(field => {
-
-field.addEventListener("input",()=>{
-
-removeError(field)
-
-})
+    field.addEventListener("input",()=>{
+        removeError(field)
+    })
 
 })
 
 /* ================================
-   EMPRESA → CARGAR SUCURSALES
+   EMPRESA → SUCURSALES
 ================================ */
 
 empresaInput.addEventListener("input",()=>{
 
-const empresa = empresaInput.value.trim()
+    const empresa = empresaInput.value.trim()
 
-sucursalInput.value = ""
-sucursalList.innerHTML = ""
+    sucursalInput.value = ""
+    sucursalList.innerHTML = ""
 
-if(empresasSucursales[empresa]){
+    if(empresasSucursales[empresa]){
 
-empresasSucursales[empresa].forEach(sucursal=>{
+        empresasSucursales[empresa].forEach(sucursal=>{
 
-const option = document.createElement("option")
-option.value = sucursal
+            const option = document.createElement("option")
+            option.value = sucursal
 
-sucursalList.appendChild(option)
-
-})
-
-}
+            sucursalList.appendChild(option)
+        })
+    }
 
 })
 
 /* ================================
-   VALIDAR EMPRESA
+   VALIDACIONES ESPECIFICAS
 ================================ */
 
 function validarEmpresa(){
 
-const empresa = empresaInput.value.trim()
+    const empresa = empresaInput.value.trim()
 
-if(!empresasSucursales.hasOwnProperty(empresa)){
+    if(!empresasSucursales.hasOwnProperty(empresa)){
+        showError(empresaInput,"Por favor ingrese una empresa válida")
+        return false
+    }
 
-mostrarError(empresaInput,"Por favor ingrese una empresa válida")
-
-return false
-
+    removeError(empresaInput)
+    return true
 }
-
-limpiarError(empresaInput)
-
-return true
-
-}
-
-/* ================================
-   VALIDAR SUCURSAL
-================================ */
 
 function validarSucursal(){
 
-const empresa = empresaInput.value.trim()
-const sucursal = sucursalInput.value.trim()
+    const empresa = empresaInput.value.trim()
+    const sucursal = sucursalInput.value.trim()
 
-if(!empresasSucursales[empresa]){
+    if(!empresasSucursales[empresa]){
+        showError(empresaInput,"Seleccione primero una empresa válida")
+        return false
+    }
 
-mostrarError(empresaInput,"Seleccione primero una empresa válida")
+    if(!empresasSucursales[empresa].includes(sucursal)){
+        showError(sucursalInput,"Por favor ingrese una sucursal válida")
+        return false
+    }
 
-return false
-
-}
-
-if(!empresasSucursales[empresa].includes(sucursal)){
-
-mostrarError(sucursalInput,"Por favor ingrese una sucursal válida")
-
-return false
-
-}
-
-limpiarError(sucursalInput)
-
-return true
-
+    removeError(sucursalInput)
+    return true
 }
 
 /* ================================
-   MENSAJES DE ERROR VISUALES
+   FECHA MAXIMA
 ================================ */
 
-function mostrarError(input,mensaje){
-
-let error = input.parentElement.querySelector(".error-text")
-
-if(!error){
-
-error = document.createElement("div")
-error.className = "error-text"
-
-input.parentElement.appendChild(error)
-
-}
-
-error.innerText = mensaje
-
-}
-
-function limpiarError(input){
-
-let error = input.parentElement.querySelector(".error-text")
-
-if(error){
-error.remove()
-}
-
-}
+document.getElementById("fecha_hecho").max = new Date().toISOString().split("T")[0]
 
 /* ================================
    MENU MOBILE
@@ -776,18 +767,14 @@ const menu = document.querySelector(".nav-menu")
 
 if(toggle && menu){
 
-toggle.addEventListener("click",()=>{
-
-menu.classList.toggle("active")
-
-})
+    toggle.addEventListener("click",()=>{
+        menu.classList.toggle("active")
+    })
 
 }
 
 /* ================================
-   INICIAR FORMULARIO
-=*/
+   INICIO
+================================ */
 
 showStep()
-
-document.querySelector("input[name='fecha_hecho']").max = new Date().toISOString().split("T")[0];
