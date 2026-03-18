@@ -10,7 +10,9 @@ const nextBtn = document.getElementById("next")
 const prevBtn = document.getElementById("prev")
 const submitBtn = document.getElementById("submit")
 
+
 const progress = document.getElementById("progress")
+const stepIndicator = document.getElementById("step-indicator")
 
 const radiosAnonimo = document.querySelectorAll("input[name='anonimo']")
 const datos = document.getElementById("datos_personales")
@@ -336,7 +338,10 @@ contenedor.appendChild(bloque)
 
 
 
-
+function updateProgress(){
+    const percent = ((currentStep + 1) / steps.length) * 100
+    progress.style.width = percent + "%"
+}
 
 
 
@@ -398,33 +403,72 @@ soloLetras(apellidoDenunciadoInput)
    NAVEGACION DE PASOS
 ================================ */
 
-function showStep(){
+
 
     steps.forEach((step,index)=>{
-
         step.classList.remove("active")
 
         if(index === currentStep){
             step.classList.add("active")
         }
-
     })
 
     updateProgress()
 
-    // CAMBIO DE TEXTO DEL BOTON
-    if(currentStep === steps.length - 1){
-        nextBtn.textContent = "Enviar denuncia"
+    // mostrar/ocultar botones
+    if(currentStep === 0){
+        prevBtn.style.display = "none"
     }else{
-        nextBtn.textContent = "Siguiente"
+        prevBtn.style.display = "inline-block"
     }
 
-}
+    if(currentStep === steps.length - 1){
+        nextBtn.style.display = "none"
+        submitBtn.style.display = "inline-block"
+    }else{
+        nextBtn.style.display = "inline-block"
+        submitBtn.style.display = "none"
+    }
 
 /* ================================
    BOTON SIGUIENTE
 ================================ */
    
+function showStep(){
+
+    steps.forEach((step,index)=>{
+        step.classList.remove("active")
+
+        if(index === currentStep){
+            step.classList.add("active")
+        }
+    })
+
+    updateProgress()
+
+    stepIndicator.textContent = `${currentStep + 1}/${steps.length}`
+
+    if(currentStep === 0){
+        prevBtn.style.display = "none"
+    }else{
+        prevBtn.style.display = "inline-block"
+    }
+
+    if(currentStep === steps.length - 1){
+        nextBtn.style.display = "none"
+        submitBtn.style.display = "inline-block"
+    }else{
+        nextBtn.style.display = "inline-block"
+        submitBtn.style.display = "none"
+    }
+}
+
+
+
+
+
+
+
 nextBtn.addEventListener("click",()=>{
 
     /* ================= VALIDAR ANONIMATO ================= */
@@ -458,7 +502,26 @@ nextBtn.addEventListener("click",()=>{
     if(currentStep === 2){
         if(!validarSucursal()) return
     }
+    if(currentStep === 4){
 
+        const irregularidadSeleccionada = document.querySelector("input[name='tipo_irregularidad']:checked")
+
+        if(!irregularidadSeleccionada){
+
+            const contenedor = document.querySelector(".irregularidades")
+
+            if(!contenedor.querySelector(".error-message")){
+
+                const error = document.createElement("span")
+                error.className = "error-message"
+                error.innerText = "Debe seleccionar un tipo de irregularidad"
+
+                contenedor.appendChild(error)
+            }
+
+            return
+        }
+    }
     /* ================= VALIDACION GENERAL ================= */
     if(!validateStep()) return
 
