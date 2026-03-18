@@ -208,6 +208,24 @@ background:#444;
 
 /* PROGRESS BAR */
 
+
+.form-progress-info{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:8px;
+}
+
+#step-indicator{
+    font-size:14px;
+    color:#666;
+    font-weight:600;
+    letter-spacing:.5px;
+}
+
+
+
+
+
 .progress-bar{
 
 width:100%;
@@ -411,7 +429,7 @@ resize:vertical;
 
 .aviso-latter p{
     font-size: 14px;
-    color: #ffffff;
+    color: #000000;
     line-height: 1.5;
     margin-bottom: 10px;
 }
