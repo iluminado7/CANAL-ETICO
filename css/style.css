@@ -6,9 +6,9 @@ html, body{
 
 body{
 
-background:#0f0f0f;
+background:#f8f8f6;
+color:#1a1a1a;
 font-family:Arial;
-color:white;
 display:flex;
 flex-direction:column;
 margin: 0;
@@ -19,7 +19,8 @@ min-height:100vh;
 
 .container{
 
-background:#1b1b1b;
+background:#111;
+color:#fff;
 padding:40px;
 border-radius:10px;
 width:500px;
@@ -31,7 +32,7 @@ padding-top:120px;
 h1{
 
 text-align:center;
-color:#d4af37;
+color: #111;;
 
 }
 
@@ -44,7 +45,7 @@ color:#d4af37;
 max-width:700px;
 margin:120px auto 80px auto;
 padding:40px;
-background:#161616;
+background:#ffffff;
 border-radius:10px;
 box-shadow:0 10px 30px rgba(0,0,0,0.5);
 
@@ -61,7 +62,7 @@ margin-bottom:30px;
 
 .form-title h1{
 
-color:#d4af37;
+color:#000000;
 font-size:28px;
 margin-bottom:10px;
 
@@ -69,7 +70,7 @@ margin-bottom:10px;
 
 .form-title p{
 
-color:#ccc;
+color:#000000;
 font-size:15px;
 
 }
@@ -104,11 +105,11 @@ input,
 select,
 textarea{
 
-background:#0f0f0f;
-border:1px solid #333;
+background:#fffbfb;
+border:1px solid 0 0 6px rgba(212,175,55,.4);
 padding:12px 14px;
 border-radius:6px;
-color:white;
+color:rgb(0, 0, 0);
 font-size:14px;
 transition:.2s;
 
@@ -144,7 +145,7 @@ gap:10px;
 
 .radio-option{
 
-background:#111;
+background:#e8e8e8;
 padding:12px;
 border-radius:6px;
 border:1px solid #2a2a2a;
