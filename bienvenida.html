@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canal de Denuncias | Bienvenida</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f8f8f6;
+      color:#1a1a1a;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .top-banner{
+      width:100%;
+      background:#111;
+      color:#fff;
+      text-align:center;
+      padding:12px 20px;
+      font-size:14px;
+      font-weight:500;
+      letter-spacing:.2px;
+    }
+
+    .header{
+      width:100%;
+      display:flex;
+      align-items:center;
+      padding:24px 40px;
+      background:transparent;
+    }
+
+    .logo{
+      max-height:52px;
+      width:auto;
+      display:block;
+    }
+
+    .welcome-wrap{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px 60px;
+    }
+
+    .welcome-card{
+      width:100%;
+      max-width:760px;
+      background:#fff;
+      border-radius:20px;
+      box-shadow:0 10px 35px rgba(0,0,0,.08);
+      padding:56px 48px;
+      text-align:center;
+      border:1px solid rgba(0,0,0,.04);
+    }
+
+    .welcome-card h1{
+      font-size:38px;
+      line-height:1.15;
+      margin-bottom:18px;
+      color:#111;
+    }
+
+    .welcome-card p{
+      font-size:17px;
+      line-height:1.7;
+      color:#444;
+      max-width:580px;
+      margin:0 auto 34px;
+    }
+
+    .welcome-note{
+      display:inline-block;
+      background:#f4f4ef;
+      color:#5b5b5b;
+      font-size:14px;
+      padding:10px 16px;
+      border-radius:999px;
+      margin-bottom:26px;
+      border:1px solid rgba(0,0,0,.06);
+    }
+
+    .btn-start{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      background:#111;
+      color:#fff;
+      text-decoration:none;
+      padding:16px 28px;
+      border-radius:12px;
+      font-size:16px;
+      font-weight:600;
+      transition:.25s ease;
+      box-shadow:0 8px 18px rgba(0,0,0,.12);
+    }
+
+    .btn-start:hover{
+      transform:translateY(-2px);
+      background:#000;
+    }
+
+    .btn-start span{
+      font-size:18px;
+      transition:transform .25s ease;
+    }
+
+    .btn-start:hover span{
+      transform:translateX(4px);
+    }
+
+    @media (max-width:768px){
+      .header{
+        padding:20px;
+      }
+
+      .welcome-card{
+        padding:38px 24px;
+        border-radius:16px;
+      }
+
+      .welcome-card h1{
+        font-size:29px;
+      }
+
+      .welcome-card p{
+        font-size:15px;
+      }
+
+      .btn-start{
+        width:100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-banner">
+    Su conexión es privada. No rastreamos IP ni metadatos.
+  </div>
+
+  <header class="header">
+    <img src="img/Go Harvey® - invert.png" alt="Logo del cliente" class="logo">
+  </header>
+
+  <main class="welcome-wrap">
+    <section class="welcome-card">
+      <div class="welcome-note">Canal web seguro y confidencial</div>
+
+      <h1>Bienvenido al Canal de Denuncias</h1>
+
+      <p>
+        Este espacio fue diseñado para que pueda realizar un reporte de manera segura,
+        confidencial y con el mayor resguardo posible. Antes de comenzar, le recomendamos
+        tener a mano toda la información relevante para completar su denuncia con claridad.
+      </p>
+
+      <a href="index.html" class="btn-start">
+        Iniciar reporte en canal web <span>→</span>
+      </a>
+    </section>
+  </main>
+
+</body>
+</html>
