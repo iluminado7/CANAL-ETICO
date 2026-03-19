@@ -7,6 +7,19 @@ const submitBtn = document.getElementById("submit");
 const progress = document.getElementById("progress");
 const stepIndicator = document.getElementById("step-indicator");
 
+
+const stepHashes = [
+  "¿desea-mantenerse-anonimo?",
+  "empresa-involucrada",
+  "sucursal",
+  "datos-del-denunciado",
+  "tipo-de-irregularidad",
+  "detalle-del-hecho",
+  "adjuntar-evidencia",
+  "resumen"
+];
+
+
 const radiosAnonimo = document.querySelectorAll("input[name='anonimo']");
 const datosPersonales = document.getElementById("datos_personales");
 
@@ -23,6 +36,27 @@ const sectorOtro = document.getElementById("sector_otro");
 const cargo = document.getElementById("cargo_denunciado");
 const cargoOtro = document.getElementById("cargo_otro");
 const fechaHecho = document.getElementById("fecha_hecho");
+
+
+
+function actualizarURLPaso() {
+  const hash = stepHashes[currentStep] || "desea-anonimato";
+  history.replaceState(null, "", `#${hash}`);
+}
+function obtenerPasoDesdeURL() {
+  const hashActual = window.location.hash.replace("#", "").trim();
+
+  if (!hashActual) return 0;
+
+  const index = stepHashes.indexOf(hashActual);
+
+  return index !== -1 ? index : 0;
+}
+
+
+
+
+
 
 const empresasSucursales = {
   "Mc Donalds": [
@@ -189,6 +223,7 @@ function showStep() {
     submitBtn.style.display = "none";
   }
 
+  actualizarURLPaso();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -500,7 +535,7 @@ if (toggle && menu) {
     menu.classList.toggle("active");
   });
 }
-
+currentStep = obtenerPasoDesdeURL();
 showStep();
 
 /* ================================
@@ -534,3 +569,23 @@ if (formDenuncia) {
         }
     });
 }
+
+window.addEventListener("hashchange", () => {
+  const pasoURL = obtenerPasoDesdeURL();
+
+  if (pasoURL >= 0 && pasoURL < steps.length) {
+    currentStep = pasoURL;
+
+    const stepActual = steps[currentStep];
+
+    if (stepActual.id === "cuestionario") {
+      cargarCuestionario();
+    }
+
+    if (stepActual.id === "resumen-step") {
+      generarResumen();
+    }
+
+    showStep();
+  }
+});
