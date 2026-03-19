@@ -1,463 +1,351 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Canal de Denuncias</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/header.css">
-<link rel="stylesheet" href="css/footer.css">
-<link rel="manifest" href="manifest.json">
+  <meta charset="UTF-8">
+  <title>Canal de Denuncias</title>
 
-<meta name="theme-color" content="#d4af37">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#d4af37">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-<meta name="mobile-web-app-capable" content="yes">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
 </head>
 
 <body>
-
-<div id="header-container"></div>
-<main class="contenido">
-
-
-    <!--PANTALLA 2 -->
-<div class="form-container">
-
-<div class="form-title">
-
-<h1>Canal de denuncias</h1>
-<p>Puede realizar su denuncia de forma completamente anónima.</p>
-
-</div>
-
-<div class="form-progress-info">
-    <span id="step-indicator">1/8</span>
-</div>
-
-
-<div class="progress-bar">
-<div class="progress" id="progress"></div>
-</div>
-
-<form id="formDenuncia" method="POST" action="enviar_denuncia.php" enctype="multipart/form-data">
-
-
-<div class="step active">
-
-<h3>¿Desea mantener el anonimato?</h3>
-<p>Su identidad está protegida por cifrado de extremo a extremo</p>
-
-<div class="radio-group">
-<p class="anon-warning">
-Si elige permanecer anónimo, no se le solicitarán datos personales.
-</p>
-<label class="radio-option">
-<input type="radio" name="anonimo" value="si"> 
-Sí, quiero permanecer anónimo
-</label>
-
-<label class="radio-option">
-<input type="radio" name="anonimo" value="no"> 
-Puedo proporcionar mis datos
-</label>
-
-</div>
-<!-- CAMPOS QUE APARECEN SOLO SI NO ES ANONIMO -->
-
-<div id="datos_personales" style="display:none; margin-top:20px;">
-
-<input type="text" name="nombre" placeholder="Nombre" required maxlength="15" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]{2,15}" title="Ingrese solo letras">
-
-<input type="text" name="apellido" placeholder="Apellido(s)" required maxlength="15" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]{2,15}" title="Ingrese solo letras">
-
-<input type="text" name="genero" id="genero" list="generos" placeholder="Ingrese su género"> 
-<datalist id="generos">
-    <option value="Masculino"></option>
-    <option value="Femenino"></option>
-    <option value="No Binario"></option>
-    <option value="Otro"></option>
-</datalist>
-
-<input type="number" name="telefono" placeholder="DNI o Cédula (sin espacios)" required>
-
-<input type="email" name="email" placeholder="Correo electrónico" required>
-
-<input type="number" name="telefono" placeholder="Teléfono (sin espacios)" required>
-
-</div>
-</div>
-<!-- DATOS DE LA EMPRESA -->
-<div class="step">
-
-<h3>Empresa involucrada</h3>
-
-<label>Seleccione o escriba la empresa</label>
-
-<input 
-type="text"
-name="empresa"
-id="empresa"
-list="empresas"
-placeholder="Escriba o seleccione una empresa"
-pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]{3,60}"
-title="Ingrese solo letras"
-required
->
-
-<datalist id="empresas">
-
-<option value="Mc Donalds">
-<option value="Mostaza">
-<option value="Cerrajeria Leonardo">
-
-</datalist>
-
-</div>
-<!-- DATOS DE LA SUCURSAL -->
-<div class="step">
-
-<h3>Sucursal</h3>
-
-<label>Seleccione o escriba la sucursal</label>
-
-<input 
-type="text"
-name="sucursal"
-id="sucursal"
-list="sucursales"
-placeholder="Seleccione una sucursal"
-required
->
-
-<datalist id="sucursales"></datalist>
-
-</div>
-
-<div class="step">
-<h3>Datos del trabajador denunciado</h3>
-
-<p>En algunas situaciones reportadas, no es posible individualizar a un responsable directo.
-Si no conoce al autor de los hechos o no es posible individualizarlo, por favor en el campo
-de "Nombre y Apellido(s)", escriba la frase "No especificado".
-Recuerde que, cuanta mayor cantidad de información nos brinde, el Comité Receptor podrá
-llevar a cabo un mejor proceso de investigación.
-En la siguiente pantalla podrá incluir mayor detalle
-</p>
-
-
-
-<label for="nombre_denunciado">Nombre</label>
-<input 
-type="text" 
-id="nombre_denunciado" 
-name="nombre_denunciado" 
-maxlength="50" 
-required>
-
-<label for="apellido_denunciado">Apellido(s)</label>
-<input 
-type="text" 
-id="apellido_denunciado" 
-name="apellido_denunciado" 
-maxlength="50" 
-required>
-
-<label for="sector_denunciado">Sector</label>
-
-<select id="sector_denunciado" name="sector_denunciado" required>
-
-<option value="">Seleccione un sector</option>
-
-<option value="Administración">Administración</option>
-<option value="Atencion Cliente">Atendción al Cliente</option>
-<option value="Auditoria Interna">Auditoria Interna</option>
-<option value="Compras">Compras</option>
-<option value="Recursos Humanos">Recursos Humanos</option>
-<option value="Finanzas">Finanzas</option>
-<option value="Operaciones">Operaciones</option>
-<option value="Ventas">Ventas</option>
-<option value="IT">IT</option>
-<option value="Seguridad">Seguridad</option>
-<option value="Logística">Logística</option>
-<option value="Tesoreria">Tesoreria</option>
-<option value="Otro">Otro</option>
-</select>
-<input
-type="text" 
-id="sector_otro" 
-name="sector_otro" 
-placeholder="Especifique el sector"
-style="display:none;"
->
-
-
-<label for="cargo_denunciado">Cargo / Puesto</label>
-
-<select id="cargo_denunciado" name="cargo_denunciado" required>
-
-<option value="">Seleccione un cargo/puesto</option>
-
-<option value="Empleado">Empleado</option>
-<option value="Supervisor">Supervisor</option>
-<option value="Encargado">Encargado</option>
-<option value="Gerente">Gerente</option>
-<option value="Director">Director</option>
-<option value="Auxiliar">Auxiliar</option>
-<option value="Operador">Operador</option>
-<option value="Analista">Analista</option>
-<option value="Tercerizado">Tercerizado</option>
-<option value="Vicepresidente">Vicepresidente</option>
-<option value="Otro">Otro</option>
-</select>
-<input 
-type="text" 
-id="cargo_otro" 
-name="cargo_otro" 
-placeholder="Especifique el cargo/puesto"
-style="display:none;"
->
-
-<!--
-<label class="checkbox-desconocido">
-
-<input type="checkbox" name="no_conoce_datos" id="no-datos-denunciado">
-No conozco todos los datos del trabajador denunciado
-</label> -->
-
-</div>
-
-
-
-<div class="step">
-
-<h3>Tipo de irregularidad</h3>
-<p>"Seleccione la irregularidad que presuntamente se está cometiendo y desea reportar.
-Si desea reportar varios temas, solicitamos que realice un reporte por cada tipo
-o haga click en Reporte libre y luego en CONTINUAR
-</p>
-<div class="irregularidades">
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="fraude" required>
-
-<div class="card-content">
-<h4>Fraude</h4>
-<p>Fraude, Robo, Hurto y gastos irregulares</p>
-</div>
-
-<span class="check"></span>
-
-</label>
-
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="acoso">
-
-<div class="card-content">
-<h4>Acoso</h4>
-<p>Acoso, discriminación y malos tratos</p>
-</div>
-
-<span class="check"></span>
-
-</label>
-
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="corrupcion">
-
-<div class="card-content">
-<h4>Corrupción</h4>
-<p>Corrupción y acuerdos irregulares</p>
-</div>
-
-<span class="check"></span>
-
-</label>
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="conflicto_intereses">
-
-<div class="card-content">
-<h4>Conflicto de intereses</h4>
-<p>Situaciones donde intereses personales afectan decisiones laborales</p>
-</div>
-
-<span class="check"></span>
-</label>
-
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="adulteracion">
-
-<div class="card-content">
-<h4>Adulteracion</h4>
-<p>Adulteración de Información y Documentación</p>
-</div>
-
-<span class="check"></span>
-</label>
-
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="mal_desempeno">
-
-<div class="card-content">
-<h4>Mal desempeño</h4>
-<p>Mal desempeño, Abuso de Poder y Favoritismo.</p>
-</div>
-
-<span class="check"></span>
-</label>
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="robo_informacion">
-
-<div class="card-content">
-<h4>Robo de Información</h4>
-<p>Robo de información interna.</p>
-</div>
-
-<span class="check"></span>
-</label>
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="mal_uso_bienes">
-
-<div class="card-content">
-<h4>Mal uso de Bienes</h4>
-<p>Mal uso de bienes y servicios.</p>
-</div>
-
-<span class="check"></span>
-</label>
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="mejora_procesos">
-
-<div class="card-content">
-<h4>Mejora de Procesos</h4>
-<p>Mejora de procesos.</p>
-</div>
-
-<span class="check"></span>
-</label>
-
-<label class="card-irregularidad">
-<input type="radio" name="tipo_irregularidad" value="reporte_libre">
-
-<div class="card-content">
-<h4>Reporte Libre</h4>
-<p>Sin categoria especifica - Campo de texto libre.</p>
-</div>
-
-<span class="check"></span>
-</label>
-
-
-</div>
-
-</div>
-
-
-
-<div class="step" id="cuestionario">
-
-<h3 id="titulo-cuestionario"></h3>
-
-<p id="descripcion-cuestionario"></p>
-
-<h3>Fecha de lo ocurrido</h3>
-<input 
-type="date"
-name="fecha_hecho"
-id="fecha_hecho"
-required
->
-
-<div id="preguntas-container"></div>
-
-</div>
-
-<div class="step">
-
-<h3>Alguna observacion</h3>
-
-<textarea name="observacion" rows="6" minlength="15" maxlength="1000"></textarea>
-
-</div>
-
-<div class="step">
-
-<h3>Adjuntar evidencia (opcional)</h3>
-<p>Advertencia: Tamaño maximo de archivo por reporte son de 25MB</p>
-<input type="file" name="archivo">
-
-<div class="aviso-latter">
-
-    <div class="aviso-item">
-        <span class="icon">🔒</span>
-        <div>
-            <h1>Anonimato</h1>
-            <p>En caso de que haya elegido ser anónimo, asegúrese de no incluir datos que lo identifiquen.</p>
+  <div id="header-container"></div>
+
+  <main class="contenido">
+    <section class="form-container" aria-labelledby="titulo-formulario">
+      <div class="form-title">
+        <h1 id="titulo-formulario">Canal de denuncias</h1>
+        <p>Puede realizar su denuncia de forma reservada y, si así lo desea, sin identificarse.</p>
+      </div>
+
+      <div class="form-progress-info">
+        <span id="step-indicator" aria-live="polite">1/8</span>
+      </div>
+
+      <div class="progress-bar" aria-hidden="true">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <form id="formDenuncia" method="POST" action="enviar_denuncia.php" enctype="multipart/form-data" novalidate>
+        <!-- PASO 1 -->
+        <div class="step active">
+          <h3>¿Desea mantener el anonimato?</h3>
+          <p class="step-description">
+            Puede enviar la denuncia sin identificarse. Evite incluir datos personales en los campos de texto o archivos adjuntos si desea preservar su anonimato.
+          </p>
+
+          <div class="radio-group">
+            <p class="anon-warning">
+              Si elige permanecer en el anonimato, los datos personales no serán solicitados como obligatorios.
+            </p>
+
+            <label class="radio-option">
+              <input type="radio" name="anonimo" value="si">
+              <span>Sí, quiero permanecer anónimo</span>
+            </label>
+
+            <label class="radio-option">
+              <input type="radio" name="anonimo" value="no">
+              <span>Puedo proporcionar mis datos</span>
+            </label>
+          </div>
+
+          <div id="datos_personales" class="datos-personales" aria-hidden="true">
+            <input type="text" name="nombre" placeholder="Nombre" maxlength="30" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]{2,30}" title="Ingrese solo letras">
+            <input type="text" name="apellido" placeholder="Apellido(s)" maxlength="30" pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]{2,30}" title="Ingrese solo letras">
+
+            <input type="text" name="genero" id="genero" list="generos" placeholder="Ingrese su género">
+            <datalist id="generos">
+              <option value="Masculino"></option>
+              <option value="Femenino"></option>
+              <option value="No binario"></option>
+              <option value="Otro"></option>
+            </datalist>
+
+            <input type="text" name="dni" placeholder="DNI o Cédula (sin espacios)" inputmode="numeric" maxlength="20">
+            <input type="email" name="email" placeholder="Correo electrónico">
+            <input type="text" name="telefono" placeholder="Teléfono (sin espacios)" inputmode="tel" maxlength="20">
+          </div>
         </div>
-    </div>
 
-    <div class="aviso-item">
-        <span class="icon">⚠️</span>
-        <div>
-            <h1>Responsabilidad</h1>
-            <p>Usted se hace responsable por el contenido de los archivos adjuntos.</p>
+        <!-- PASO 2 -->
+        <div class="step">
+          <h3>Empresa involucrada</h3>
+          <label for="empresa">Seleccione o escriba la empresa</label>
+          <input
+            type="text"
+            name="empresa"
+            id="empresa"
+            list="empresas"
+            placeholder="Escriba o seleccione una empresa"
+            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]{3,60}"
+            title="Ingrese solo letras"
+            required
+          >
+
+          <datalist id="empresas">
+            <option value="Mc Donalds"></option>
+            <option value="Mostaza"></option>
+            <option value="Cerrajeria Leonardo"></option>
+            <option value="Acceso"></option>
+          </datalist>
         </div>
-    </div>
 
-    <div class="aviso-item">
-        <span class="icon">📩</span>
-        <div>
-            <h1>Soporte</h1>
-            <p>Si tiene problemas para adjuntar, contacte a info@canaldedenuncias.com.</p>
+        <!-- PASO 3 -->
+        <div class="step">
+          <h3>Sucursal</h3>
+          <label for="sucursal">Seleccione o escriba la sucursal</label>
+          <input
+            type="text"
+            name="sucursal"
+            id="sucursal"
+            list="sucursales"
+            placeholder="Seleccione una sucursal"
+            required
+          >
+          <datalist id="sucursales"></datalist>
         </div>
-    </div>
 
-</div>
+        <!-- PASO 4 -->
+        <div class="step">
+          <h3>Datos del trabajador denunciado</h3>
+          <p class="step-description">
+            Si no conoce la identidad del posible responsable, puede indicar “No especificado” en los campos de nombre y apellido.
+            Cuanta más información aporte, más precisa podrá ser la evaluación del caso.
+          </p>
 
-</div>
+          <label for="nombre_denunciado">Nombre</label>
+          <input type="text" id="nombre_denunciado" name="nombre_denunciado" maxlength="50" required>
 
-<div class="step" id="resumen-step">
+          <label for="apellido_denunciado">Apellido(s)</label>
+          <input type="text" id="apellido_denunciado" name="apellido_denunciado" maxlength="50" required>
 
-<h3>Resumen de la denuncia</h3>
-<p>Revise la información antes de enviar. Si necesita corregir algo, puede volver atrás.</p>
+          <label for="sector_denunciado">Sector</label>
+          <select id="sector_denunciado" name="sector_denunciado" required>
+            <option value="">Seleccione un sector</option>
+            <option value="Administración">Administración</option>
+            <option value="Atención al Cliente">Atención al Cliente</option>
+            <option value="Auditoría Interna">Auditoría Interna</option>
+            <option value="Compras">Compras</option>
+            <option value="Recursos Humanos">Recursos Humanos</option>
+            <option value="Finanzas">Finanzas</option>
+            <option value="Operaciones">Operaciones</option>
+            <option value="Ventas">Ventas</option>
+            <option value="IT">IT</option>
+            <option value="Seguridad">Seguridad</option>
+            <option value="Logística">Logística</option>
+            <option value="Tesorería">Tesorería</option>
+            <option value="Otro">Otro</option>
+          </select>
 
-<div id="resumen-contenido"></div>
+          <input
+            type="text"
+            id="sector_otro"
+            name="sector_otro"
+            placeholder="Especifique el sector"
+            style="display:none;"
+          >
 
-</div>
+          <label for="cargo_denunciado">Cargo / Puesto</label>
+          <select id="cargo_denunciado" name="cargo_denunciado" required>
+            <option value="">Seleccione un cargo o puesto</option>
+            <option value="Empleado">Empleado</option>
+            <option value="Supervisor">Supervisor</option>
+            <option value="Encargado">Encargado</option>
+            <option value="Gerente">Gerente</option>
+            <option value="Director">Director</option>
+            <option value="Auxiliar">Auxiliar</option>
+            <option value="Operador">Operador</option>
+            <option value="Analista">Analista</option>
+            <option value="Tercerizado">Tercerizado</option>
+            <option value="Vicepresidente">Vicepresidente</option>
+            <option value="Otro">Otro</option>
+          </select>
 
-<div class="form-buttons">
+          <input
+            type="text"
+            id="cargo_otro"
+            name="cargo_otro"
+            placeholder="Especifique el cargo o puesto"
+            style="display:none;"
+          >
+        </div>
 
-<button type="button" id="prev">Anterior</button>
-<button type="button" id="next">Siguiente</button>
+        <!-- PASO 5 -->
+        <div class="step">
+          <h3>Tipo de irregularidad</h3>
+          <p class="step-description">
+            Seleccione la irregularidad que desea reportar. Si necesita informar más de una, puede enviar una denuncia por cada tipo o elegir “Reporte libre”.
+          </p>
 
-<button type="submit" id="submit" style="display: none;">Enviar denuncia</button>
+          <div class="irregularidades">
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="fraude" required>
+              <div class="card-content">
+                <h4>Fraude</h4>
+                <p>Fraude, robo, hurto y gastos irregulares.</p>
+              </div>
+              <span class="check"></span>
+            </label>
 
-</div>
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="acoso">
+              <div class="card-content">
+                <h4>Acoso</h4>
+                <p>Acoso, discriminación y malos tratos.</p>
+              </div>
+              <span class="check"></span>
+            </label>
 
-</form>
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="corrupcion">
+              <div class="card-content">
+                <h4>Corrupción</h4>
+                <p>Corrupción y acuerdos irregulares.</p>
+              </div>
+              <span class="check"></span>
+            </label>
 
-</div>
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="conflicto_intereses">
+              <div class="card-content">
+                <h4>Conflicto de intereses</h4>
+                <p>Intereses personales que afectan decisiones laborales.</p>
+              </div>
+              <span class="check"></span>
+            </label>
 
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="adulteracion">
+              <div class="card-content">
+                <h4>Adulteración</h4>
+                <p>Adulteración de información y documentación.</p>
+              </div>
+              <span class="check"></span>
+            </label>
 
-<a href="https://wa.me/5491123456789" class="whatsapp-btn" target="_blank">
-<img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="60">
-</a>
-</main>
-<div id="footer-container"></div>
-<script src="js/script.js"></script>
-<script src="js/layout.js"></script>
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="mal_desempeno">
+              <div class="card-content">
+                <h4>Mal desempeño</h4>
+                <p>Abuso de poder, favoritismo o mal desempeño.</p>
+              </div>
+              <span class="check"></span>
+            </label>
 
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="robo_informacion">
+              <div class="card-content">
+                <h4>Robo de información</h4>
+                <p>Sustracción o uso indebido de información interna.</p>
+              </div>
+              <span class="check"></span>
+            </label>
+
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="mal_uso_bienes">
+              <div class="card-content">
+                <h4>Mal uso de bienes</h4>
+                <p>Uso inapropiado de bienes y servicios.</p>
+              </div>
+              <span class="check"></span>
+            </label>
+
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="mejora_procesos">
+              <div class="card-content">
+                <h4>Mejora de procesos</h4>
+                <p>Sugerencias o fallas en procesos.</p>
+              </div>
+              <span class="check"></span>
+            </label>
+
+            <label class="card-irregularidad">
+              <input type="radio" name="tipo_irregularidad" value="reporte_libre">
+              <div class="card-content">
+                <h4>Reporte libre</h4>
+                <p>Sin categoría específica. Campo de texto libre.</p>
+              </div>
+              <span class="check"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- PASO 6 -->
+        <div class="step" id="cuestionario">
+          <h3 id="titulo-cuestionario"></h3>
+          <p id="descripcion-cuestionario"></p>
+
+          <label for="fecha_hecho">Fecha de lo ocurrido</label>
+          <input type="date" name="fecha_hecho" id="fecha_hecho" required>
+
+          <div id="preguntas-container"></div>
+        </div>
+
+        <!-- PASO 7 -->
+        <div class="step">
+          <h3>Adjuntar evidencia (opcional)</h3>
+          <p>El tamaño máximo por archivo es de 25 MB.</p>
+          <input type="file" name="archivo">
+
+          <div class="aviso-latter">
+            <div class="aviso-item">
+              <span class="icon">🔒</span>
+              <div>
+                <h4>Anonimato</h4>
+                <p>Si eligió permanecer en el anonimato, revise que el archivo no incluya datos que permitan identificarlo.</p>
+              </div>
+            </div>
+
+            <div class="aviso-item">
+              <span class="icon">⚠️</span>
+              <div>
+                <h4>Responsabilidad</h4>
+                <p>Usted es responsable por el contenido y la legitimidad de los archivos adjuntos.</p>
+              </div>
+            </div>
+
+            <div class="aviso-item">
+              <span class="icon">📩</span>
+              <div>
+                <h4>Soporte</h4>
+                <p>Si tiene inconvenientes para adjuntar archivos, comuníquese mediante el canal de soporte disponible.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PASO 8 -->
+        <div class="step" id="resumen-step">
+          <h3>Resumen de la denuncia</h3>
+          <p>Revise la información antes de enviar. Si necesita corregir algo, puede volver atrás.</p>
+          <div id="resumen-contenido"></div>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" id="prev">Anterior</button>
+          <button type="button" id="next">Siguiente</button>
+          <button type="submit" id="submit" style="display:none;">Enviar denuncia</button>
+        </div>
+      </form>
+    </section>
+
+    <a href="https://wa.me/5491123456789" class="whatsapp-btn" target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+    </a>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script src="js/script.js"></script>
+  <script src="js/layout.js"></script>
 </body>
 </html>
