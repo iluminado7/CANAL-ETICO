@@ -1,720 +1,478 @@
 @import url(header.css);
-html, body{
-    min-height:100vh;
+
+*,
+*::before,
+*::after{
+  box-sizing:border-box;
 }
 
+html,
+body{
+  min-height:100vh;
+}
 
 body{
-
-background:#f8f8f6;
-color:#1a1a1a;
-font-family:Arial;
-display:flex;
-flex-direction:column;
-margin: 0;
-min-height:100vh;
+  margin:0;
+  background:#f5f4ef;
+  color:#1a1a1a;
+  font-family:Arial, sans-serif;
+  display:flex;
+  flex-direction:column;
 }
 
-
-
-.container{
-
-background:#111;
-color:#fff;
-padding:40px;
-border-radius:10px;
-width:500px;
-box-shadow:0 0 15px rgba(0,0,0,0.6);
-padding-top:120px;
-
+.contenido{
+  flex:1;
 }
 
-h1{
-
-text-align:center;
-color: #111;;
-
+h1,
+h2,
+h3,
+h4,
+p{
+  margin-top:0;
 }
-
-
-
-/* ================= FORMULARIO DENUNCIAS ================= */
 
 .form-container{
-
-max-width:700px;
-margin:120px auto 80px auto;
-padding:40px;
-background:#ffffff;
-border-radius:10px;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
-
+  max-width:760px;
+  margin:120px auto 80px;
+  padding:40px;
+  background:#ffffff;
+  border:1px solid rgba(212,175,55,.18);
+  border-radius:18px;
+  box-shadow:0 14px 40px rgba(0,0,0,.10);
 }
 
-/* TITULO */
-
 .form-title{
-
-text-align:center;
-margin-bottom:30px;
-
+  text-align:center;
+  margin-bottom:30px;
 }
 
 .form-title h1{
-
-color:#000000;
-font-size:28px;
-margin-bottom:10px;
-
+  color:#111;
+  font-size:30px;
+  margin-bottom:10px;
 }
 
 .form-title p{
-
-color:#000000;
-font-size:15px;
-
+  color:#4a4a4a;
+  font-size:15px;
+  line-height:1.6;
 }
 
-/* PASOS */
-
 .step{
-
-display:none;
-flex-direction:column;
-gap:18px;
-
+  display:none;
+  flex-direction:column;
+  gap:18px;
 }
 
 .step.active{
+  display:flex;
+  animation:fadeIn .35s ease;
+}
 
-display:flex;
-animation:fadeIn .4s ease;
-
+.step-description{
+  color:#555;
+  line-height:1.6;
 }
 
 @keyframes fadeIn{
-
-from{opacity:0; transform:translateY(10px);}
-to{opacity:1; transform:translateY(0);}
-
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
 }
 
-/* INPUTS */
+label{
+  font-size:14px;
+  font-weight:600;
+  color:#1f1f1f;
+}
 
 input,
 select,
 textarea{
-
-background:#fffbfb;
-border:1px solid 0 0 6px rgba(212,175,55,.4);
-padding:12px 14px;
-border-radius:6px;
-color:rgb(0, 0, 0);
-font-size:14px;
-transition:.2s;
-
+  width:100%;
+  background:#fff;
+  border:1px solid #d9d9d9;
+  padding:13px 14px;
+  border-radius:10px;
+  color:#111;
+  font-size:14px;
+  transition:border-color .2s, box-shadow .2s, transform .2s;
 }
 
 input:focus,
 textarea:focus,
 select:focus{
-
-outline:none;
-border-color:#d4af37;
-box-shadow:0 0 6px rgba(212,175,55,.4);
-
+  outline:none;
+  border-color:#d4af37;
+  box-shadow:0 0 0 4px rgba(212,175,55,.16);
 }
-
-/* TEXTAREA */
 
 textarea{
-
-resize:none;
-
+  resize:vertical;
+  min-height:120px;
 }
-
-/* RADIO BUTTONS */
-
-.radio-group{
-
-display:flex;
-flex-direction:column;
-gap:10px;
-
-}
-
-.radio-option{
-
-background:#e8e8e8;
-padding:12px;
-border-radius:6px;
-border:1px solid #2a2a2a;
-cursor:pointer;
-transition:.2s;
-
-}
-
-.radio-option:hover{
-
-border-color:#d4af37;
-
-}
-
-/* BOTONES */
-
-
-.form-buttons{
-
-display:flex;
-justify-content:space-between;
-margin-top: 80px;
-
-}
-
-button{
-
-background:#d4af37;
-color:black;
-border:none;
-padding:12px 22px;
-border-radius:6px;
-font-weight:bold;
-cursor:pointer;
-transition:.2s;
-
-}
-
-button:hover{
-
-background:#b9972e;
-transform:translateY(-1px);
-
-}
-
-/* BOTON ANTERIOR */
-
-#prev{
-
-background:#333;
-color:white;
-
-}
-
-#prev:hover{
-
-background:#444;
-
-}
-
-/* PROGRESS BAR */
-
 
 .form-progress-info{
-    display:flex;
-    justify-content:flex-end;
-    margin-bottom:8px;
+  display:flex;
+  justify-content:flex-end;
+  margin-bottom:8px;
 }
 
 #step-indicator{
-    font-size:14px;
-    color:#666;
-    font-weight:600;
-    letter-spacing:.5px;
+  font-size:14px;
+  color:#666;
+  font-weight:700;
+  letter-spacing:.4px;
 }
 
-
-
-
-
 .progress-bar{
-
-width:100%;
-height:6px;
-background:#2a2a2a;
-border-radius:5px;
-margin-bottom:25px;
-overflow:hidden;
-
+  width:100%;
+  height:8px;
+  background:#ece8dc;
+  border-radius:999px;
+  margin-bottom:30px;
+  overflow:hidden;
 }
 
 .progress{
-
-height:100%;
-width:0%;
-background:#d4af37;
-transition:.3s;
-
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, #c9a45c, #d4af37);
+  transition:width .3s ease;
 }
 
-/*DATOS PERSONALES*/
-
-#datos_personales{
-
-display:none;
-margin-top:20px;
-display:flex;
-flex-direction:column;
-gap:12px;
-
+.radio-group{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
 }
 
-/*CAMPOS INCOMPLETOS*/
+.anon-warning{
+  padding:14px 16px;
+  border-radius:10px;
+  background:rgba(212,175,55,.10);
+  color:#5c4b18;
+  border:1px solid rgba(212,175,55,.25);
+  line-height:1.5;
+}
+
+.radio-option{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  background:#fafafa;
+  padding:14px 16px;
+  border-radius:10px;
+  border:1px solid #dfdfdf;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.radio-option:hover{
+  border-color:#d4af37;
+  background:#fffdf7;
+}
+
+.radio-option input{
+  width:auto;
+  margin-top:2px;
+}
+
+.datos-personales{
+  display:none;
+  margin-top:10px;
+  flex-direction:column;
+  gap:12px;
+}
+
+.form-buttons{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  margin-top:50px;
+}
+
+button{
+  min-width:140px;
+  background:#d4af37;
+  color:#111;
+  border:none;
+  padding:14px 22px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .2s, transform .2s, box-shadow .2s;
+}
+
+button:hover{
+  background:#bf9a2c;
+  transform:translateY(-1px);
+}
+
+#prev{
+  background:#2e2e2e;
+  color:#fff;
+}
+
+#prev:hover{
+  background:#444;
+}
+
 .error-message{
-
-color:#ff4d4d;
-font-size:13px;
-margin-top:8px;
-display:block;
-
+  color:#c62828;
+  font-size:13px;
+  margin-top:6px;
+  display:block;
 }
 
-.error-text{
-
-color:#d4af37;
-font-size:13px;
-margin-top:5px;
-
-}
 .input-error{
-
-border:1px solid #ff4d4d !important;
-
+  border-color:#c62828 !important;
+  box-shadow:0 0 0 4px rgba(198,40,40,.10);
 }
-
-/* ARCHIVO */
 
 input[type="file"]{
-
-border:1px dashed #444;
-padding:15px;
-cursor:pointer;
-
+  border:1px dashed #b8b8b8;
+  padding:16px;
+  cursor:pointer;
+  background:#fcfcfc;
 }
 
-
-
 .irregularidades{
-
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:16px;
-margin-top:25px;
-
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:16px;
+  margin-top:10px;
 }
 
 .card-irregularidad{
-
-position:relative;
-border:2px solid #c9a45c; /* dorado */
-border-radius:10px;
-padding:18px;
-cursor:pointer;
-transition:0.25s;
-background:transparent; /* mismo fondo que formulario */
-
+  position:relative;
+  border:1px solid rgba(201,164,92,.55);
+  border-radius:14px;
+  padding:18px;
+  cursor:pointer;
+  transition:border-color .25s, transform .25s, box-shadow .25s, background .25s;
+  background:#fff;
 }
 
 .card-irregularidad:hover{
-
-border-color:#b0c95c;
-box-shadow:0 4px 10px rgba(0,0,0,0.05);
-
+  border-color:#c9a45c;
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
+  transform:translateY(-2px);
 }
 
 .card-irregularidad input{
-
-display:none;
-
+  display:none;
 }
 
 .card-content h4{
-
-margin-bottom:6px;
-font-size:16px;
-
+  margin-bottom:6px;
+  font-size:16px;
+  color:#111;
 }
 
 .card-content p{
-
-font-size:13px;
-color:#666;
-
+  font-size:13px;
+  color:#666;
+  line-height:1.5;
+  margin-bottom:0;
 }
-
-/* CHECK */
 
 .check{
-
-position:absolute;
-top:10px;
-right:10px;
-width:22px;
-height:22px;
-border-radius:50%;
-border:2px solid #ccc;
-
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:2px solid #ccc;
+  background:#fff;
 }
 
-/* CARD SELECCIONADA */
-
 .card-irregularidad input:checked + .card-content + .check{
-
-background:#c9a45c;
-border-color:#c9a45c;
-
+  background:#c9a45c;
+  border-color:#c9a45c;
 }
 
 .card-irregularidad input:checked + .card-content + .check::after{
-
-content:"✓";
-color:white;
-font-size:14px;
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-
+  content:"✓";
+  color:#fff;
+  font-size:14px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
 }
 
-/* ===============================
-   CUESTIONARIO DENUNCIA
-================================ */
-
 .pregunta-item{
-
-display:flex;
-flex-direction:column;
-margin-bottom:25px;
-
+  display:flex;
+  flex-direction:column;
+  margin-bottom:10px;
 }
 
 .pregunta-label{
-
-font-weight:500;
-margin-bottom:10px;
-line-height:1.4;
-
+  font-weight:600;
+  margin-bottom:8px;
+  line-height:1.5;
 }
 
 .pregunta-textarea{
-
-width:100%;
-min-height:120px;
-resize:vertical;
-
+  min-height:120px;
 }
-
 
 .aviso-latter{
-    background: rgba(212, 175, 55, 0.08); /* dorado suave */
-    border-left: 4px solid #d4af37; /* detalle elegante */
-    padding: 20px;
-    margin-top: 25px;
-    border-radius: 10px;
-}
-
-/* Cada bloque interno */
-.aviso-latter h1{
-    font-size: 16px;
-    color: #d4af37;
-    margin-bottom: 5px;
-    margin-top: 15px;
-    font-weight: 600;
-}
-
-/* Primer título sin margen arriba */
-.aviso-latter h1:first-child{
-    margin-top: 0;
-}
-
-.aviso-latter p{
-    font-size: 14px;
-    color: #000000;
-    line-height: 1.5;
-    margin-bottom: 10px;
+  background:rgba(212,175,55,.08);
+  border-left:4px solid #d4af37;
+  padding:20px;
+  margin-top:20px;
+  border-radius:12px;
 }
 
 .aviso-item{
-   margin-top: 10px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  margin-bottom:18px;
 }
 
 .aviso-item:last-child{
-   margin-top: 0;
+  margin-bottom:0;
+}
+
+.icon{
+  font-size:20px;
+  line-height:1;
+}
+
+.aviso-item h4{
+  font-size:16px;
+  color:#8f6e12;
+  margin-bottom:6px;
+}
+
+.aviso-item p{
+  font-size:14px;
+  color:#333;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+#resumen-contenido{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.resumen-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:20px;
+  padding:14px 16px;
+  border-radius:12px;
+  background:#faf9f5;
+  border:1px solid #ece7d7;
+}
+
+.resumen-label{
+  font-weight:700;
+  color:#555;
+  font-size:14px;
+}
+
+.resumen-valor{
+  color:#111;
+  font-size:14px;
+  text-align:right;
+  max-width:60%;
+  word-break:break-word;
 }
 
 .whatsapp-btn{
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999;
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:999;
 }
 
 .whatsapp-btn img{
-    width:50px;
+  width:54px;
+  height:54px;
+  display:block;
 }
-
-
-
-
-#resumen-contenido{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-/* ITEM */
-.resumen-item{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 12px 15px;
-    border-radius: 10px;
-    background: #f9f9f9;
-    border: 1px solid #eee;
-}
-
-/* LABEL */
-.resumen-label{
-    font-weight: 600;
-    color: #555;
-    font-size: 14px;
-}
-
-/* VALOR */
-.resumen-valor{
-    color: #111;
-    font-size: 14px;
-    text-align: right;
-    max-width: 60%;
-    word-break: break-word;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:768px){
-
-*{
-box-sizing:border-box;
-}
-
-
-.contenido{
-    margin-top: 0;
-}
-
-.form-container{
-
-margin:100px 20px 60px 20px;
-padding:30px;
-
-}
-
-
-
-}
-
-
-/* ===============================
-   MOVILES PEQUEÑOS
-================================ */
 
 @media (max-width:768px){
-
-html{
-scroll-behavior:smooth;
-}
-
-body{
-padding-top:70px;
-overflow-x:hidden;
-}
-
-
-
-.contenido{
-
-padding-top:40px;
-
-}
-
-.form-container{
-width:100%;
-max-width:500px;
-margin:0 auto;
-padding:22px 18px;
-}
-
-/* TITULO */
-
-.form-title h1{
-
-font-size:22px;
-
-}
-
-.form-title p{
-
-font-size:14px;
-
-}
-
-/* INPUTS */
-
-input,
-select,
-textarea{
-
-font-size:16px; /* evita zoom en iOS */
-padding:14px;
-width:100%;
-margin-bottom:6px;
-}
-
-/* RADIO */
-
-.radio-option{
-
-font-size:14px;
-padding:14px;
-
-}
-
-/* BOTONES */
-
-.form-buttons{
-
-flex-direction:column;
-gap:12px;
-margin-top:40px;
-
-}
-
-button{
-
-width:100%;
-padding:16px;
-font-size:16px;
-border-radius:8px;
-
-}
-
-/* PROGRESS */
-
-.progress-bar{
-height:10px;
-border-radius:20px;
-}
-
-/* LABEL */
-
-label{
-display:block;
-margin-top:18px;
-margin-bottom:6px;
-font-size:14px;
-}
-
-/* TEXT AREA */
-textarea{
-min-height:140px;
-resize:none;
-}
-
-
-.irregularidades{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-}
-
-
-/* ===============================
-   MOVILES MEDIANOS
-================================ */
-
-@media (min-width:481px) and (max-width:768px){
-
-body{
-
-align-items:flex-start;
-padding:30px 20px;
-
-}
-
-
-.contenido{
-padding-top:140px;
-}
-
-
-.form-container{
-
-margin:0 auto;
-padding:30px;
-width:100%;
-
-}
-
-
-
-input,
-select,
-textarea{
-
-font-size:15px;
-padding:13px;
-
-}
-
-
-.form-buttons{
-
-margin-top:60px;
-
-}
-
-button{
-
-padding:14px 20px;
-font-size:15px;
-
-}
-
-
-.irregularidades{
-
-grid-template-columns:1fr;
-
-}
-
+  body{
+    overflow-x:hidden;
+  }
+
+  .form-container{
+    margin:100px 16px 60px;
+    padding:24px 18px;
+    border-radius:16px;
+  }
+
+  .form-title h1{
+    font-size:24px;
+  }
+
+  .form-title p{
+    font-size:14px;
+  }
+
+  input,
+  select,
+  textarea{
+    font-size:16px;
+    padding:14px;
+  }
+
+  .form-buttons{
+    flex-direction:column;
+    margin-top:36px;
+  }
+
+  button{
+    width:100%;
+  }
+
+  .irregularidades{
+    grid-template-columns:1fr;
+  }
+
+  .resumen-item{
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .resumen-valor{
+    max-width:100%;
+    text-align:left;
+  }
 }
 
 @media (max-width:480px){
+  .form-container{
+    margin:92px 12px 50px;
+    padding:20px 14px;
+  }
 
-.form-container{
+  .pregunta-label{
+    font-size:15px;
+  }
 
-width:100%;
-max-width:100%;
-margin:0 auto;
-padding:20px 16px;
+  .pregunta-textarea{
+    min-height:110px;
+  }
 
-}
-
-}
-
-@media (max-width:480px){
-
-.pregunta-label{
-font-size:15px;
-line-height:1.4;
-}
-
-.pregunta-textarea{
-min-height:110px;
-padding:14px;
-}
-
+  .whatsapp-btn img{
+    width:48px;
+    height:48px;
+  }
 }
