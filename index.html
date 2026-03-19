@@ -80,38 +80,22 @@
         <div class="step">
           <h3>Empresa involucrada</h3>
           <label for="empresa">Seleccione o escriba la empresa</label>
-          <input
-            type="text"
-            name="empresa"
-            id="empresa"
-            list="empresas"
-            placeholder="Escriba o seleccione una empresa"
-            pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]{3,60}"
-            title="Ingrese solo letras"
-            required
-          >
-
-          <datalist id="empresas">
-            <option value="Mc Donalds"></option>
-            <option value="Mostaza"></option>
-            <option value="Cerrajeria Leonardo"></option>
-            <option value="Acceso"></option>
-          </datalist>
+            <select name="empresa" id="empresa" required>
+                <option value="">Seleccione una empresa</option>
+                <option value="Mc Donalds">Mc Donalds</option>
+                <option value="Mostaza">Mostaza</option>
+                <option value="Cerrajeria Leonardo">Cerrajeria Leonardo</option>
+                <option value="Acceso">Acceso1</option>
+            </select>
         </div>
 
         <!-- PASO 3 -->
         <div class="step">
           <h3>Sucursal</h3>
           <label for="sucursal">Seleccione o escriba la sucursal</label>
-          <input
-            type="text"
-            name="sucursal"
-            id="sucursal"
-            list="sucursales"
-            placeholder="Seleccione una sucursal"
-            required
-          >
-          <datalist id="sucursales"></datalist>
+          <select name="sucursal" id="sucursal" required>
+          <option value="">Seleccione una sucursal</option>
+          </select>
         </div>
 
         <!-- PASO 4 -->
@@ -337,7 +321,6 @@
         </div>
       </form>
     </section>
-
 
   </main>
 
