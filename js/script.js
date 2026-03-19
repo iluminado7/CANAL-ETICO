@@ -14,7 +14,6 @@ const nombreInput = document.querySelector("input[name='nombre']");
 const apellidoInput = document.querySelector("input[name='apellido']");
 const empresaInput = document.getElementById("empresa");
 const sucursalInput = document.getElementById("sucursal");
-const sucursalList = document.getElementById("sucursales");
 
 const nombreDenunciadoInput = document.getElementById("nombre_denunciado");
 const apellidoDenunciadoInput = document.getElementById("apellido_denunciado");
@@ -289,19 +288,20 @@ function validarSucursal() {
   return true;
 }
 
-function cargarSucursales() {
+empresaInput.addEventListener("change", () => {
   const empresa = empresaInput.value.trim();
-  sucursalInput.value = "";
-  sucursalList.innerHTML = "";
 
-  if (!empresasSucursales[empresa]) return;
+  sucursalInput.innerHTML = '<option value="">Seleccione una sucursal</option>';
 
-  empresasSucursales[empresa].forEach((sucursal) => {
-    const option = document.createElement("option");
-    option.value = sucursal;
-    sucursalList.appendChild(option);
-  });
-}
+  if (empresasSucursales[empresa]) {
+    empresasSucursales[empresa].forEach((sucursal) => {
+      const option = document.createElement("option");
+      option.value = sucursal;
+      option.textContent = sucursal;
+      sucursalInput.appendChild(option);
+    });
+  }
+});
 
 function cargarCuestionario() {
   const seleccionado = document.querySelector("input[name='tipo_irregularidad']:checked");
@@ -421,7 +421,7 @@ cargo.addEventListener("change", function () {
   if (!mostrar) cargoOtro.value = "";
 });
 
-empresaInput.addEventListener("input", cargarSucursales);
+
 
 document.querySelectorAll("input, textarea, select").forEach((field) => {
   field.addEventListener("input", () => removeError(field));
